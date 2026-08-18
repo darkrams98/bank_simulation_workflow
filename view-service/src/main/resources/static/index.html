@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>درگاه پرداخت شبیه‌سازی شده</title>
+<style>
+:root{
+  --bg:#0f1117;
+  --surface:#171a23;
+  --surface-2:#1e2230;
+  --border:#2a2f3f;
+  --text:#e8eaf0;
+  --muted:#9aa3b8;
+  --accent:#5b8def;
+  --accent-hover:#4a7ce0;
+  --success:#2fbf71;
+  --danger:#e5484d;
+  --warning:#f5a524;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Vazirmatn,"IRANSans",Tahoma,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.7;
+}
+.hidden{display:none !important}
+header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+.brand-dot{width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.header-left{display:flex;align-items:center;gap:14px}
+.user-chip{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:13px;
+  color:var(--muted);
+}
+main{max-width:1080px;margin:0 auto;padding:28px 20px 60px}
+.tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.tab{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--muted);
+  padding:10px 20px;
+  border-radius:999px;
+  cursor:pointer;
+  font-family:inherit;
+  font-size:14px;
+  transition:.15s;
+}
+.tab:hover{color:var(--text);border-color:#3a4157}
+.tab.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:18px;
+}
+.card h2{font-size:17px;margin-bottom:16px;font-weight:700}
+.card h3{font-size:15px;margin-bottom:12px;font-weight:600;color:var(--muted)}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+input,select{
+  width:100%;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:10px;
+  padding:11px 13px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  transition:.15s;
+}
+input:focus,select:focus{border-color:var(--accent)}
+input::placeholder{color:#5c6478}
+.field{margin-bottom:14px}
+button{
+  font-family:inherit;
+  cursor:pointer;
+  border:none;
+  border-radius:10px;
+  padding:11px 20px;
+  font-size:14px;
+  font-weight:600;
+  transition:.15s;
+}
+.btn-primary{background:var(--accent);color:#fff;width:100%}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-ghost{background:var(--surface-2);border:1px solid var(--border);color:var(--muted)}
+.btn-ghost:hover{color:var(--text)}
+.btn-danger{background:transparent;border:1px solid #4a2a2e;color:var(--danger);padding:7px 14px;font-size:13px}
+.btn-danger:hover{background:#2a1a1c}
+.btn-sm{padding:8px 16px;font-size:13px}
+.product{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.product-name{font-weight:700;font-size:16px}
+.product-desc{font-size:13px;color:var(--muted);min-height:40px}
+.price{font-size:18px;font-weight:700;color:var(--accent)}
+.price span{font-size:12px;color:var(--muted);font-weight:400}
+.stock{font-size:12px;color:var(--muted)}
+.card-item{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.card-number{font-family:"SF Mono",Consolas,monospace;font-size:16px;letter-spacing:2px;direction:ltr}
+.card-holder{font-size:13px;color:var(--muted)}
+.bin-badge{
+  background:#232a3d;
+  border:1px solid #333c56;
+  color:#8fa8e0;
+  border-radius:8px;
+  padding:3px 10px;
+  font-size:12px;
+  font-family:Consolas,monospace;
+  direction:ltr;
+  display:inline-block;
+}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:11px 10px;text-align:right;border-bottom:1px solid var(--border)}
+th{color:var(--muted);font-weight:600;font-size:12px}
+td{color:var(--text)}
+.mono{font-family:Consolas,monospace;direction:ltr;display:inline-block;font-size:12px}
+.badge{border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600;display:inline-block}
+.badge-success{background:rgba(47,191,113,.15);color:var(--success)}
+.badge-danger{background:rgba(229,72,77,.15);color:var(--danger)}
+.badge-warning{background:rgba(245,165,36,.15);color:var(--warning)}
+.alert{border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px}
+.alert-error{background:rgba(229,72,77,.12);border:1px solid rgba(229,72,77,.3);color:#ff9a9d}
+.alert-success{background:rgba(47,191,113,.12);border:1px solid rgba(47,191,113,.3);color:#7ce0a8}
+.empty{text-align:center;color:var(--muted);padding:36px 10px;font-size:14px}
+.overlay{
+  position:fixed;inset:0;
+  background:rgba(8,10,15,.75);
+  display:flex;align-items:center;justify-content:center;
+  z-index:100;padding:20px;
+}
+.modal{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:26px;
+  max-width:440px;
+  width:100%;
+}
+.modal h3{font-size:18px;margin-bottom:18px;color:var(--text)}
+.result-icon{font-size:44px;text-align:center;margin-bottom:10px}
+.result-title{text-align:center;font-size:19px;font-weight:700;margin-bottom:8px}
+.result-msg{text-align:center;color:var(--muted);font-size:14px;margin-bottom:20px}
+.kv{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.kv span:first-child{color:var(--muted)}
+.spinner{
+  width:34px;height:34px;margin:0 auto 14px;
+  border:3px solid var(--border);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.flow{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:14px;
+}
+.flow i{font-style:normal;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;padding:3px 8px}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+.auth-wrap{max-width:420px;margin:40px auto}
+.switch-link{text-align:center;margin-top:14px;font-size:13px;color:var(--muted)}
+.switch-link a{color:var(--accent);cursor:pointer;text-decoration:none}
+.row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.row .field{flex:1;min-width:180px;margin-bottom:0}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="brand-dot"></span><span>فروشگاه و درگاه پرداخت</span></div>
+  <div class="header-left">
+    <span id="userChip" class="user-chip hidden"></span>
+    <button id="logoutBtn" class="btn-ghost btn-sm hidden">خروج</button>
+  </div>
+</header>
+
+<main>
+
+  <section id="authView" class="auth-wrap">
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" data-auth="login">ورود</button>
+        <button class="tab" data-auth="register">ثبت نام</button>
+      </div>
+
+      <div id="authAlert"></div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>نام کاربری</label>
+          <input id="loginUsername" placeholder="alireza" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label>رمز عبور</label>
+          <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn-primary">ورود به حساب</button>
+        <div class="switch-link">حساب ندارید؟ <a data-auth="register">ثبت نام کنید</a></div>
+      </form>
+
+      <form id="registerForm" class="hidden">
+        <div class="field">
+          <label>نام کاربری</label>
+          <input id="regUsername" placeholder="alireza" minlength="3" required>
+        </div>
+        <div class="field">
+          <label>ایمیل</label>
+          <input id="regEmail" type="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label>رمز عبور</label>
+          <input id="regPassword" type="password" placeholder="حداقل ۶ کاراکتر" minlength="6" required>
+        </div>
+        <button type="submit" class="btn-primary">ایجاد حساب</button>
+        <div class="switch-link">حساب دارید؟ <a data-auth="login">وارد شوید</a></div>
+      </form>
+    </div>
+  </section>
+
+  <section id="appView" class="hidden">
+    <div class="tabs">
+      <button class="tab active" data-view="products">محصولات</button>
+      <button class="tab" data-view="cards">کارت‌های من</button>
+      <button class="tab" data-view="history">تاریخچه تراکنش‌ها</button>
+    </div>
+
+    <div id="appAlert"></div>
+
+    <div id="productsView">
+      <div class="card">
+        <h2>محصولات فروشگاه</h2>
+        <div id="productList" class="grid grid-3"></div>
+      </div>
+    </div>
+
+    <div id="cardsView" class="hidden">
+      <div class="card">
+        <h2>تعریف کارت خرید</h2>
+        <form id="cardForm">
+          <div class="row">
+            <div class="field">
+              <label>شماره کارت (۱۶ رقم)</label>
+              <input id="cardNumber" inputmode="numeric" maxlength="16" placeholder="6037991234567890" dir="ltr" required>
+            </div>
+            <div class="field">
+              <label>نام دارنده کارت</label>
+              <input id="cardHolder" placeholder="ALIREZA MOGHADASI" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width:auto">افزودن کارت</button>
+          </div>
+          <div class="hint">شش رقم اول کارت (BIN) تعیین می‌کند تراکنش به کدام بانک مسیریابی شود: 603799 و 589210 → بانک یک، 627353 و 621986 → بانک دو</div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>کارت‌های ثبت شده</h2>
+        <div id="cardList" class="grid"></div>
+      </div>
+    </div>
+
+    <div id="historyView" class="hidden">
+      <div class="card">
+        <h2>تاریخچه پرداخت‌ها</h2>
+        <div id="historyBox"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="payModal" class="overlay hidden">
+  <div class="modal">
+    <h3>پرداخت محصول</h3>
+    <div class="kv"><span>محصول</span><span id="payProductName"></span></div>
+    <div class="kv" style="margin-bottom:18px"><span>مبلغ</span><span id="payAmount"></span></div>
+    <div class="field">
+      <label>انتخاب کارت</label>
+      <select id="paySelectCard"></select>
+    </div>
+    <div id="payAlert"></div>
+    <div class="row" style="margin-top:6px">
+      <button id="payConfirm" class="btn-primary" style="flex:1">پرداخت</button>
+      <button id="payCancel" class="btn-ghost">انصراف</button>
+    </div>
+  </div>
+</div>
+
+<div id="loadingModal" class="overlay hidden">
+  <div class="modal" style="max-width:360px">
+    <div class="spinner"></div>
+    <div class="result-title">در حال پردازش تراکنش…</div>
+    <div class="result-msg">لطفاً تا دریافت پاسخ بانک منتظر بمانید</div>
+    <div class="flow">
+      <i>VIEW</i>←<i>PSP</i>←<i>شاپرک</i>←<i>RabbitMQ</i>←<i>بانک</i>
+    </div>
+  </div>
+</div>
+
+<div id="resultModal" class="overlay hidden">
+  <div class="modal">
+    <div id="resultIcon" class="result-icon"></div>
+    <div id="resultTitle" class="result-title"></div>
+    <div id="resultMsg" class="result-msg"></div>
+    <div id="resultDetails"></div>
+    <button id="resultClose" class="btn-primary" style="margin-top:18px">بستن</button>
+  </div>
+</div>
+
+<script>
+const API = "";
+let token = null;
+let currentUser = null;
+let cards = [];
+let selectedProduct = null;
+
+const STATUS_FA = {
+  SUCCESS: "پرداخت با موفقیت انجام شد",
+  INSUFFICIENT_FUNDS: "موجودی حساب کافی نیست",
+  INVALID_CARD: "کارت نامعتبر است",
+  CARD_INACTIVE: "کارت مسدود یا غیرفعال است",
+  BANK_NOT_FOUND: "بانکی برای این BIN یافت نشد",
+  TIMEOUT: "پاسخی از بانک دریافت نشد",
+  FAILED: "تراکنش ناموفق بود",
+  PENDING: "در انتظار پاسخ"
+};
+
+const $ = id => document.getElementById(id);
+const money = v => Number(v).toLocaleString("fa-IR") + " ریال";
+const maskCard = c => c.substring(0, 6) + "******" + c.substring(12);
+
+function alertBox(target, message, type) {
+  $(target).innerHTML = message
+    ? '<div class="alert alert-' + type + '">' + message + '</div>'
+    : "";
+  if (message) setTimeout(() => { $(target).innerHTML = ""; }, 6000);
+}
+
+function badgeFor(status) {
+  const cls = status === "SUCCESS" ? "badge-success"
+    : (status === "INSUFFICIENT_FUNDS" || status === "TIMEOUT" || status === "PENDING") ? "badge-warning"
+    : "badge-danger";
+  return '<span class="badge ' + cls + '">' + (STATUS_FA[status] || status) + "</span>";
+}
+
+async function api(path, options) {
+  const opts = options || {};
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = "Bearer " + token;
+
+  const response = await fetch(API + path, {
+    method: opts.method || "GET",
+    headers: headers,
+    body: opts.body ? JSON.stringify(opts.body) : undefined
+  });
+
+  if (response.status === 401) {
+    logout();
+    throw new Error("نشست شما منقضی شده است، دوباره وارد شوید");
+  }
+
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!response.ok) {
+    let message = (data && (data.message || data.error)) || "خطا در ارتباط با سرور";
+    if (data && data.fieldErrors) {
+      message = Object.values(data.fieldErrors).join(" - ");
+    }
+    throw new Error(message);
+  }
+  return data;
+}
+
+document.querySelectorAll("[data-auth]").forEach(el => {
+  el.addEventListener("click", () => {
+    const mode = el.getAttribute("data-auth");
+    document.querySelectorAll(".tab[data-auth]").forEach(t =>
+      t.classList.toggle("active", t.getAttribute("data-auth") === mode));
+    $("loginForm").classList.toggle("hidden", mode !== "login");
+    $("registerForm").classList.toggle("hidden", mode !== "register");
+    $("authAlert").innerHTML = "";
+  });
+});
+
+document.querySelectorAll("[data-view]").forEach(el => {
+  el.addEventListener("click", () => {
+    const view = el.getAttribute("data-view");
+    document.querySelectorAll(".tab[data-view]").forEach(t =>
+      t.classList.toggle("active", t.getAttribute("data-view") === view));
+    $("productsView").classList.toggle("hidden", view !== "products");
+    $("cardsView").classList.toggle("hidden", view !== "cards");
+    $("historyView").classList.toggle("hidden", view !== "history");
+    if (view === "products") loadProducts();
+    if (view === "cards") loadCards();
+    if (view === "history") loadHistory();
+  });
+});
+
+$("registerForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    await api("/api/auth/register", {
+      method: "POST",
+      body: {
+        username: $("regUsername").value.trim(),
+        email: $("regEmail").value.trim(),
+        password: $("regPassword").value
+      }
+    });
+    alertBox("authAlert", "ثبت نام انجام شد، اکنون وارد شوید", "success");
+    $("loginUsername").value = $("regUsername").value.trim();
+    document.querySelector('.tab[data-auth="login"]').click();
+  } catch (err) {
+    alertBox("authAlert", err.message, "error");
+  }
+});
+
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    const data = await api("/api/auth/login", {
+      method: "POST",
+      body: {
+        username: $("loginUsername").value.trim(),
+        password: $("loginPassword").value
+      }
+    });
+    token = data.accessToken;
+    currentUser = data.username;
+    enterApp();
+  } catch (err) {
+    alertBox("authAlert", err.message, "error");
+  }
+});
+
+$("logoutBtn").addEventListener("click", logout);
+
+function logout() {
+  token = null;
+  currentUser = null;
+  cards = [];
+  $("appView").classList.add("hidden");
+  $("authView").classList.remove("hidden");
+  $("userChip").classList.add("hidden");
+  $("logoutBtn").classList.add("hidden");
+  $("loginPassword").value = "";
+}
+
+function enterApp() {
+  $("authView").classList.add("hidden");
+  $("appView").classList.remove("hidden");
+  $("userChip").textContent = currentUser;
+  $("userChip").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+  document.querySelector('.tab[data-view="products"]').click();
+}
+
+async function loadProducts() {
+  const box = $("productList");
+  box.innerHTML = '<div class="empty">در حال بارگذاری…</div>';
+  try {
+    const products = await api("/api/products");
+    if (!products.length) {
+      box.innerHTML = '<div class="empty">محصولی ثبت نشده است</div>';
+      return;
+    }
+    box.innerHTML = products.map(p =>
+      '<div class="product">' +
+        '<div class="product-name">' + p.name + '</div>' +
+        '<div class="product-desc">' + (p.description || "") + '</div>' +
+        '<div class="price">' + money(p.price) + '</div>' +
+        '<div class="stock">موجودی: ' + p.stock + ' عدد</div>' +
+        '<button class="btn-primary btn-sm" onclick="openPay(' + p.id + ',\'' +
+          p.name.replace(/'/g, "") + '\',' + p.price + ')">خرید</button>' +
+      '</div>'
+    ).join("");
+  } catch (err) {
+    box.innerHTML = '<div class="empty">' + err.message + '</div>';
+  }
+}
+
+async function loadCards() {
+  const box = $("cardList");
+  box.innerHTML = '<div class="empty">در حال بارگذاری…</div>';
+  try {
+    cards = await api("/api/cards");
+    if (!cards.length) {
+      box.innerHTML = '<div class="empty">هنوز کارتی تعریف نکرده‌اید</div>';
+      return;
+    }
+    box.innerHTML = cards.map(c =>
+      '<div class="card-item">' +
+        '<div>' +
+          '<div class="card-number">' + c.maskedCardNumber + '</div>' +
+          '<div class="card-holder">' + c.cardHolderName + '</div>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          '<span class="bin-badge">BIN ' + c.bin + '</span>' +
+          '<button class="btn-danger" onclick="removeCard(' + c.id + ')">حذف</button>' +
+        '</div>' +
+      '</div>'
+    ).join("");
+  } catch (err) {
+    box.innerHTML = '<div class="empty">' + err.message + '</div>';
+  }
+}
+
+$("cardForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const number = $("cardNumber").value.trim();
+  if (!/^\d{16}$/.test(number)) {
+    alertBox("appAlert", "شماره کارت باید دقیقاً ۱۶ رقم باشد", "error");
+    return;
+  }
+  try {
+    await api("/api/cards", {
+      method: "POST",
+      body: { cardNumber: number, cardHolderName: $("cardHolder").value.trim() }
+    });
+    $("cardNumber").value = "";
+    $("cardHolder").value = "";
+    alertBox("appAlert", "کارت با موفقیت افزوده شد", "success");
+    loadCards();
+  } catch (err) {
+    alertBox("appAlert", err.message, "error");
+  }
+});
+
+async function removeCard(id) {
+  try {
+    await api("/api/cards/" + id, { method: "DELETE" });
+    loadCards();
+  } catch (err) {
+    alertBox("appAlert", err.message, "error");
+  }
+}
+
+async function loadHistory() {
+  const box = $("historyBox");
+  box.innerHTML = '<div class="empty">در حال بارگذاری…</div>';
+  try {
+    const records = await api("/api/payments/history");
+    if (!records.length) {
+      box.innerHTML = '<div class="empty">تراکنشی ثبت نشده است</div>';
+      return;
+    }
+    box.innerHTML =
+      '<table><thead><tr>' +
+        '<th>شناسه تراکنش</th><th>کارت</th><th>مبلغ</th><th>وضعیت</th><th>کد پیگیری</th><th>زمان</th>' +
+      '</tr></thead><tbody>' +
+      records.map(r =>
+        '<tr>' +
+          '<td><span class="mono">' + r.transactionId.substring(0, 12) + '…</span></td>' +
+          '<td><span class="mono">' + r.maskedCard + '</span></td>' +
+          '<td>' + money(r.amount) + '</td>' +
+          '<td>' + badgeFor(r.status) + '</td>' +
+          '<td><span class="mono">' + (r.referenceCode || "—") + '</span></td>' +
+          '<td>' + new Date(r.createdAt).toLocaleString("fa-IR") + '</td>' +
+        '</tr>'
+      ).join("") +
+      '</tbody></table>';
+  } catch (err) {
+    box.innerHTML = '<div class="empty">' + err.message + '</div>';
+  }
+}
+
+async function openPay(productId, productName, price) {
+  selectedProduct = { id: productId, name: productName, price: price };
+  $("payProductName").textContent = productName;
+  $("payAmount").textContent = money(price);
+  $("payAlert").innerHTML = "";
+
+  try {
+    cards = await api("/api/cards");
+  } catch (err) {
+    cards = [];
+  }
+
+  if (!cards.length) {
+    alertBox("appAlert", "ابتدا از بخش «کارت‌های من» یک کارت تعریف کنید", "error");
+    document.querySelector('.tab[data-view="cards"]').click();
+    return;
+  }
+
+  $("paySelectCard").innerHTML = cards.map(c =>
+    '<option value="' + c.id + '">' + c.maskedCardNumber + " — " + c.cardHolderName + "</option>"
+  ).join("");
+
+  $("payModal").classList.remove("hidden");
+}
+
+$("payCancel").addEventListener("click", () => $("payModal").classList.add("hidden"));
+
+$("payConfirm").addEventListener("click", async () => {
+  const cardId = Number($("paySelectCard").value);
+  $("payModal").classList.add("hidden");
+  $("loadingModal").classList.remove("hidden");
+
+  try {
+    const result = await api("/api/payments/purchase", {
+      method: "POST",
+      body: { productId: selectedProduct.id, cardId: cardId }
+    });
+    showResult(result);
+  } catch (err) {
+    showResult({ status: "FAILED", message: err.message, amount: selectedProduct.price });
+  } finally {
+    $("loadingModal").classList.add("hidden");
+  }
+});
+
+function showResult(result) {
+  const success = result.status === "SUCCESS";
+  $("resultIcon").textContent = success ? "✅" : (result.status === "INSUFFICIENT_FUNDS" ? "⚠️" : "❌");
+  $("resultIcon").style.color = success ? "var(--success)" : "var(--danger)";
+  $("resultTitle").textContent = STATUS_FA[result.status] || result.status;
+  $("resultMsg").textContent = result.message || "";
+
+  let html = "";
+  if (result.transactionId) html += '<div class="kv"><span>شناسه تراکنش</span><span class="mono">' + result.transactionId + "</span></div>";
+  if (result.maskedCardNumber) html += '<div class="kv"><span>کارت</span><span class="mono">' + result.maskedCardNumber + "</span></div>";
+  if (result.amount) html += '<div class="kv"><span>مبلغ</span><span>' + money(result.amount) + "</span></div>";
+  if (result.referenceCode) html += '<div class="kv"><span>کد پیگیری</span><span class="mono">' + result.referenceCode + "</span></div>";
+  html += '<div class="kv"><span>وضعیت</span><span>' + badgeFor(result.status) + "</span></div>";
+  $("resultDetails").innerHTML = html;
+
+  $("resultModal").classList.remove("hidden");
+}
+
+$("resultClose").addEventListener("click", () => {
+  $("resultModal").classList.add("hidden");
+  loadProducts();
+});
+
+$("cardNumber").addEventListener("input", e => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 16);
+});
+</script>
+</body>
+</html>
