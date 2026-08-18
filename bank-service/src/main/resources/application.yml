@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: bank-service
+  profiles:
+    active: bank1
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto
+        missing-queues-fatal: true
+  jackson:
+    default-property-inclusion: non_null
+
+logging:
+  level:
+    com.alireza.bankservice: INFO

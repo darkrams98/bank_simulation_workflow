@@ -1,0 +1,38 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: shaparak-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/shaparak_db
+      auto-index-creation: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+  jackson:
+    default-property-inclusion: non_null
+
+shaparak:
+  code: SHAPARAK-01
+  exchange: payment.exchange
+  reply-queue: shaparak.reply.queue
+  reply-routing-key: shaparak.reply
+  reply-timeout-ms: 30000
+  user-correlation-id: false
+  bin-routing:
+    "[603799]": bank.1
+    "[589210]": bank.1
+    "[627353]": bank.2
+    "[621986]": bank.2
+  bank-codes:
+    "[bank.1]": BANK1
+    "[bank.2]": BANK2
+
+logging:
+  level:
+    com.alireza.shaparakservice: INFO

@@ -1,0 +1,19 @@
+package com.alireza.viewservice.dto;
+
+import lombok.*;
+
+import java.util.Set;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AuthResponse {
+    private String accessToken;
+    private String refreshToken;
+    private String tokenType;
+    private long expiresIn;
+    private String username;
+    private Set<String> roles;
+}

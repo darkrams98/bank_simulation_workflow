@@ -1,0 +1,14 @@
+server:
+  port: 8084
+
+spring:
+  datasource:
+    url: jdbc:sqlite:./data/bank1.db
+
+bank:
+  code: BANK1
+  name: Bank One
+  queue: bank1.queue
+  supported-bins:
+    - "603799"
+    - "589210"

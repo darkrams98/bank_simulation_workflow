@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: psp-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/psp_db
+      auto-index-creation: true
+  jackson:
+    default-property-inclusion: non_null
+
+app:
+  psp:
+    code: PSP-001
+  shaparak:
+    base-url: http://localhost:8083
+    transaction-path: /api/shaparak/transactions
+
+logging:
+  level:
+    com.alireza.pspservice: INFO
